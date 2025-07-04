@@ -14,8 +14,12 @@ app.use(
     origin: "*",
   })
 );
+console.log("MONGOURL from env:", process.env.MONGOURL); // Add this
 
-mongoose.connect(MONGOURL, {});
+if (!process.env.MONGOURL) {
+  throw new Error("❌ MONGOURL environment variable is missing!");
+}
+mongoose.connect(MONGOURL);
 
 const userSchema = new mongoose.Schema({
   username: String,
