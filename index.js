@@ -104,4 +104,4 @@ app.patch("/tasks/:id/priority", authMiddleware, async (req, res) => {
   );
 });
 
-app.listen(8080, () => console.log("server is running on port 8080"));
+app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
