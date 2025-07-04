@@ -80,7 +80,7 @@ app.post("/task", authMiddleware, async (req, res) => {
 });
 //delete task request
 app.delete("/task/:id", authMiddleware, async (req, res) => {
-  await Task.findOneAndDelete({ _id: req.params.id.userId });
+  await Task.findOneAndDelete({ _id: req.params.id, userId: req.userId });
   res.json({ message: "Task deleted" });
 });
 //update Task status
@@ -92,6 +92,7 @@ app.patch("/task/:id/status", authMiddleware, async (req, res) => {
     { new: true }
   );
   if (!task) return res.status(404).json({ message: "Task not found" });
+  res.json(task);
 });
 
 //
@@ -102,6 +103,8 @@ app.patch("/tasks/:id/priority", authMiddleware, async (req, res) => {
     { priority },
     { new: true }
   );
+  if (!task) return res.status(404).json({ message: "Task not found" });
+  res.json(task);
 });
 
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
